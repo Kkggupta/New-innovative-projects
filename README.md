@@ -1,21 +1,51 @@
-# New-innovative-projects
-Die simulator
-Die Simulator Project
-Python-based Simulation of Rolling Dice with Enhanced Features
-Technologies: Python, Random Module, Collections Module (Counter)
+import random
+from collections import Counter
 
-Developed a Python program to simulate rolling one or multiple dice with real-time user input.
-Implemented features for tracking roll history and displaying statistics on the most frequent rolls.
-Utilized random module for simulating dice rolls and collections.Counter to count roll occurrences.
-Designed user-friendly interface with options to roll multiple dice, view roll history, and display statistical insights.
-Enhanced code with loops and conditional logic to ensure continuous interaction and seamless functionality.
-Key Features:
+# Function to roll a die
+def roll_die():
+    return random.randint(1, 6)
 
-Multiple Dice Roll: Allows rolling of one or more dice with custom input.
-Roll History: Keeps a log of all rolls made during the session.
-Statistics: Displays the most frequent roll in real-time.
-Modular Code: Clean and reusable functions for future expansion (e.g., adding custom die faces).
-Outcome:
+# Function to roll multiple dice
+def roll_multiple_dice(num_dice):
+    rolls = []
+    for _ in range(num_dice):
+        rolls.append(roll_die())
+    return rolls
 
-Strengthened understanding of Python’s random number generation and data analysis using collections.
-Improved skills in interactive user interfaces and statistical feature development.
+# Die simulator with multiple features
+def die_simulator():
+    roll_history = []
+    
+    while True:
+        roll = input("Press 'r' to roll the die(s), 'h' for history, 's' for statistics, 'q' to quit: ").lower()
+        
+        if roll == 'r':
+            num_dice = int(input("How many dice do you want to roll? "))
+            current_rolls = roll_multiple_dice(num_dice)
+            print(f"You rolled: {current_rolls}")
+            roll_history.extend(current_rolls)
+        
+        elif roll == 'h':
+            if not roll_history:
+                print("No rolls have been made yet.")
+            else:
+                print(f"Roll History: {roll_history}")
+        
+        elif roll == 's':
+            if not roll_history:
+                print("No rolls have been made yet.")
+            else:
+                roll_counts = Counter(roll_history)
+                most_common = roll_counts.most_common(1)[0]
+                print(f"The most frequent roll is {most_common[0]} with {most_common[1]} occurrences.")
+        
+        elif roll == 'q':
+            print("Exiting the simulator. Goodbye!")
+            break
+        
+        else:
+            print("Invalid input. Please press 'r' to roll, 'h' for history, 's' for stats, or 'q' to quit.")
+
+# Run the simulator
+die_simulator()
+
